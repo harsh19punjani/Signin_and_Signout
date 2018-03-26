@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+		<meta name="google-signin-client_id" content="680307633714-gil7fqvod1pjvord7efqenajo9q960q8.apps.googleusercontent.com">
+		
+        <title>Login/Sign-In</title>
+
+        <!-- CSS -->
+        <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=Roboto:400,100,300,500">
+        <link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css">
+        <link rel="stylesheet" href="assets/font-awesome/css/font-awesome.min.css">
+		<link rel="stylesheet" href="assets/css/form-elements.css">
+        <link rel="stylesheet" href="assets/css/style.css">
+
+        <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+        <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+        <!--[if lt IE 9]>
+            <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+            <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+        <![endif]-->
+
+        <!-- Favicon and touch icons -->
+        <link rel="shortcut icon" href="assets/ico/favicon.png">
+        <link rel="apple-touch-icon-precomposed" sizes="144x144" href="assets/ico/apple-touch-icon-144-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="114x114" href="assets/ico/apple-touch-icon-114-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" sizes="72x72" href="assets/ico/apple-touch-icon-72-precomposed.png">
+        <link rel="apple-touch-icon-precomposed" href="assets/ico/apple-touch-icon-57-precomposed.png">
+		
+		
+  <!--google platformliabrary must require-->
+		
+		
+		<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+		<script src="https://apis.google.com/js/platform.js" async defer></script>
+		
+		
+		
+		
+    </head>
+
+    <body ng-app="app">
+
+
+        <!-- Top content -->
+        <div class="top-content">
+        	
+            <div class="inner-bg" ng-controller="mycntrl">
+                <div class="container">
+                    <div class="row">
+                        <div class="col-sm-8 col-sm-offset-2 text">
+                            <h1  ng-if="login==true"><strong>Login Form</strong> &nbsp; 
+							<button type="submit" class="btn"  ng-click="signup();">Sign Up!</button>
+							</h1>
+							<h1 ng-if="login!=true"><strong>Sing-In</strong> &nbsp; 
+							<button type="submit" class="btn"   ng-click="signin();">Login</button>
+							</h1>
+						</div>
+                    </div>
+					
+					
+                    <div class="row" ng-show="login">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>Login to our site</h3>
+									
+                            		<p>Enter your username and password to log on:</p>
+                        		</div>
+                        		<div class="form-top-right">
+                        			<i class="fa fa-key"></i>
+                        		</div>
+								
+								<span ng-if="lerror" style="color:red;"> {{lerror}}</span>
+                            </div>
+                            <div class="form-bottom">
+			                    <form name="form2"   ng-submit="formlogin(form2)" >
+			                    	<div class="form-group">
+			                    		<label class="sr-only" for="form-username">Email</label>
+			                        	<input type="email" name="form-username" placeholder="Email..." ng-model="lemail" class="form-username form-control" autocomplete="off"  required >
+			                        </div>
+			                        <div class="form-group">
+			                        	<label class="sr-only" for="form-password">Password</label>
+			                        	<input type="password" name="form-password" placeholder="Password..." ng-model="lpassword"  class="form-password form-control" autocomplete="off" required >
+			                        </div>
+			                        <button type="submit" class="btn" >Sign in!</button>
+									</form>
+									
+			                   
+		                    </div>
+                        </div>
+                    </div>
+					
+					<!--sign-up-->
+					
+					<div class="row" ng-show="!login">
+                        <div class="col-sm-6 col-sm-offset-3 form-box">
+                        	<div class="form-top">
+                        		<div class="form-top-left">
+                        			<h3>SingIn to Our Site </h3>							
+                            	</div>
+								
+                        		<div class="form-top-right">
+                        			<i class="fa fa-lock"></i>
+                        		</div>
+								<span ng-if="regsuccess" style="color:green"><b>{{regsuccess}}, please login</b></span>
+					            <span ng-if="error" style="color:red">{{error}}</span>
+                            </div>
+							
+                            <div class="form-bottom">
+			                  <form name="form1"   ng-submit="formsignin(form1)" >
+			                    	<div class="form-group">
+			                    		<label class="sr-only" for="form-username">Name</label>
+			                        	<input type="text" name="form-username" placeholder="Name..." ng-model="name" class=" form-control" autocomplete="off"  required>
+			                        </div>
+										<div class="form-group">
+			                    		<label class="sr-only" for="form-email">Email</label>
+			                        	<input type="email" name="form-email" placeholder="Email..." ng-model="email" class="form-control"autocomplete="off" ng-change="error=''"  required>
+			                        </div>
+									   <div class="form-group">
+			                        	<label class="sr-only" for="form-password">Password</label>
+			                        	<input type="password" name="form-password" placeholder="Password..." ng-model="password" class="form-control"autocomplete="off"  required>
+			                        </div>
+								
+			                        <div class="form-group">
+			                        	<label class="sr-only" for="form-password">DOB</label>
+			                        	<input type="date" name="form-dob" placeholder="DOB..."  ng-model="dob" class="form-control" autocomplete="off"  required>
+			                        </div>
+									 <div class="form-group">
+			                        	<label class="sr-only" for="form-password">Phone No</label>
+			                        	<input type="number" name="form-phoneno" placeholder="Phone No..."   ng-model="phone" class="form-control" autocomplete="off" min="10"  required>
+			                        </div>
+			                        <button type="submit" class="btn" >Sign UP!</button>
+									</form>
+									
+			                   
+		                    </div>
+                        </div>
+                    </div>
+					
+					
+                    <div class="row" ng-if="login==true">
+                        <div class="col-sm-6 col-sm-offset-3 social-login">
+                        	<h3>...or login with:</h3>
+                        	
+	                        	<div class="row">
+									<fb:login-button scope="public_profile,email" onlogin="checkLoginState();">
+										</fb:login-button>
+										<button type="button" class=" g-signin2" data-onsuccess="onSignIn"></button>
+								</div>
+	                        
+								
+
+								
+                        	
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+        </div>
+
+<script>
+function onSignIn(googleUser) {
+  var profile = googleUser.getBasicProfile();
+  <!-- console.log('ID: ' + profile.getId()); // Do not send to your backend! Use an ID token instead. -->
+  <!-- console.log('Name: ' + profile.getName()); -->
+  <!-- console.log('Image URL: ' + profile.getImageUrl()); -->
+  <!-- console.log('Email: ' + profile.getEmail()); // This is null if the 'email' scope is not present. -->
+  localStorage.setItem("name",profile.getName());
+ window.location="Singinsuccess.html";
+  
+}
+	
+	 <!-- function signOut() { -->
+    <!-- var auth2 = gapi.auth2.getAuthInstance(); -->
+    <!-- auth2.signOut().then(function () { -->
+      <!-- console.log('User signed out.'); -->
+    <!-- }); -->
+  <!-- } -->
+
+</script>
+
+	<script src="script.js"></script>
+	<script>
+  // This is called with the results from from FB.getLoginStatus().
+  function statusChangeCallback(response) {
+    console.log('statusChangeCallback');
+    console.log(response);
+    // The response object is returned with a status field that lets the
+    // app know the current login status of the person.
+    // Full docs on the response object can be found in the documentation
+    // for FB.getLoginStatus().
+    if (response.status === 'connected') {
+      // Logged into your app and Facebook.
+      testAPI();
+    } else {
+      // The person is not logged into your app or we are unable to tell.
+      document.getElementById('status').innerHTML = 'Please log ' +
+        'into this app.';
+    }
+  }
+
+  // This function is called when someone finishes with the Login
+  // Button.  See the onlogin handler attached to it in the sample
+  // code below.
+  function checkLoginState() {
+  alert("First you need to install SSL certificates then also https will work");
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+  }
+
+  window.fbAsyncInit = function() {
+    FB.init({
+      appId      : '1265316150269668',
+      cookie     : true,  // enable cookies to allow the server to access 
+                          // the session
+      xfbml      : true,  // parse social plugins on this page
+      version    : 'v2.8' // use graph api version 2.8
+    });
+
+    // Now that we've initialized the JavaScript SDK, we call 
+    // FB.getLoginStatus().  This function gets the state of the
+    // person visiting this page and can return one of three states to
+    // the callback you provide.  They can be:
+    //
+    // 1. Logged into your app ('connected')
+    // 2. Logged into Facebook, but not your app ('not_authorized')
+    // 3. Not logged into Facebook and can't tell if they are logged into
+    //    your app or not.
+    //
+    // These three cases are handled in the callback function.
+
+    FB.getLoginStatus(function(response) {
+      statusChangeCallback(response);
+    });
+
+  };
+
+ 
+  
+  // Load the SDK asynchronously
+  (function(d, s, id) {
+    var js, fjs = d.getElementsByTagName(s)[0];
+    if (d.getElementById(id)) return;
+    js = d.createElement(s); js.id = id;
+    js.src = "https://connect.facebook.net/en_US/sdk.js";
+    fjs.parentNode.insertBefore(js, fjs);
+  }(document, 'script', 'facebook-jssdk'));
+
+  // Here we run a very simple test of the Graph API after login is
+  // successful.  See statusChangeCallback() for when this call is made.
+  function testAPI() {
+    console.log('Welcome!  Fetching your information.... ');
+    FB.api('/me', function(response) {
+      console.log('Successful login for: ' + response.name);
+      document.getElementById('status').innerHTML =
+        'Thanks for logging in, ' + response.name + '!';
+    });
+  }
+</script>
+
+
+        <!-- Javascript -->
+        <script src="assets/js/jquery-1.11.1.min.js"></script>
+        <script src="assets/bootstrap/js/bootstrap.min.js"></script>
+        <script src="assets/js/jquery.backstretch.min.js"></script>
+        <script src="assets/js/scripts.js"></script>
+        
+        
+    </body>
+
+</html>
